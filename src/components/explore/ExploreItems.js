@@ -1,22 +1,30 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../config/Theme";
 import StyledText from "../texts/StyledText";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const ExploreItems = ({ image, type, ...props }) => {
+  const { theme } = useContext(ThemeContext);
+  let activeColors = colors[theme.mode];
   return (
     <TouchableOpacity
-      style={[{ backgroundColor: colors.PRIMA }, styles.container]}
+      style={[
+        { backgroundColor: activeColors.PRIMA, borderColor: activeColors.DORK },
+        styles.container,
+      ]}
       {...props}
     >
       <Image style={styles.img} source={{ uri: image }} />
       <View style={styles.insider}>
-        <Text style={styles.type}> {type} </Text>
+        <Text style={[{ color: activeColors.SECO }, styles.type]}>
+          {" "}
+          {type}{" "}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 };
-
-export default ExploreItems;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +34,6 @@ const styles = StyleSheet.create({
     borderRadius: 70,
     overflow: "hidden",
     borderWidth: 1.5,
-    borderColor: colors.DORK,
   },
   img: {
     width: "100%",
@@ -44,6 +51,7 @@ const styles = StyleSheet.create({
   type: {
     fontSize: 18,
     fontWeight: "bold",
-    color: colors.SECO,
   },
 });
+
+export default ExploreItems;

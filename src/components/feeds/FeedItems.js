@@ -1,22 +1,52 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../config/Theme";
 import StyledText from "../texts/StyledText";
+import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
-const FeedItems = ({ image, title, author, profile, date, ...props }) => {
+const FeedItems = ({
+  image,
+  title,
+  author,
+  profile,
+  date,
+  content,
+  description,
+  ...props
+}) => {
+  const { theme } = useContext(ThemeContext);
+  let activeColors = colors[theme.mode];
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
-      style={[{ backgroundColor: colors.PRIMA }, styles.container]}
+      style={[{ backgroundColor: activeColors.PRIMA }, styles.container]}
       {...props}
+      onPress={() =>
+        navigation.navigate("Details", {
+          image,
+          title,
+          author,
+          profile,
+          date,
+          content,
+          description,
+        })
+      }
     >
       <Image style={styles.img} source={{ uri: image }} />
       <View style={styles.textContent}>
         <StyledText bold>{title}</StyledText>
         <View style={styles.details}>
           <Image style={styles.profile} source={{ uri: profile }} />
-          <Text style={styles.textContainer}>{author}</Text>
+          <Text style={[{ color: activeColors.SECO }, styles.textContainer]}>
+            {author}
+          </Text>
         </View>
         <View style={styles.pub}>
-          <Text style={styles.published}>{date}</Text>
+          <Text style={[{ color: activeColors.TINT }, styles.published]}>
+            {date}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -58,7 +88,6 @@ const styles = StyleSheet.create({
   textContainer: {
     fontSize: 14,
     marginTop: 10,
-    color: colors.SECO,
   },
   pub: {
     width: "100%",

@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <MainContainer>
       <StyledText big style={styles.header}>
-        Trending Feeds
+        Card-Feeds
       </StyledText>
       <FeedSection data={post} />
       <StyledText big style={styles.header}>
@@ -27,7 +27,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   header: {
-    marginTop: 30,
+    marginTop: 20,
     marginLeft: 20,
   },
 });
